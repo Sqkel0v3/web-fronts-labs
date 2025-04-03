@@ -36,6 +36,30 @@ a:active {
     transition: all 0.1s linear;
 }
 
+.paragraph {
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    padding: 7px;
+    width: 500px;
+    height: 200px; /* Основная высота */
+    overflow: auto;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Для эксперимента с высотой 100px */
+.paragraph.small {
+    height: 100px;
+}
+
+/* Стили для текста внутри абзацев */
+.paragraph p {
+    margin: 0;
+    line-height: 1.5;
+    color: #333;
+}
+
 header {
     background-color: #0277bd;
     color: white;
