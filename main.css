@@ -8,30 +8,32 @@ body {
     padding: 0;
 }
 
-/* Стили для ссылок (правильный порядок LVHA) */
+/* Стили для ссылок с анимацией */
 a:link {
-    color: #00796b; /* Непосещенные ссылки */
+    color: #00796b;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: all 0.5s ease-in-out 1s; 
 }
 
 a:visited {
-    color: #4a148c; /* Посещенные ссылки */
+    color: #4a148c;
     text-decoration: line-through;
 }
 
 a:hover {
-    color: #d32f2f; /* Красный при наведении */
+    color: #d32f2f;
     text-decoration: underline;
     background-color: #ffebee;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     transform: scale(1.02);
+    transition: all 0.3s ease-in-out 0s;
 }
 
 a:active {
-    color: #000000; /* Черный при нажатии */
+    color: #000000;
     opacity: 0.7;
     transform: scale(0.98);
+    transition: all 0.1s linear;
 }
 
 header {
