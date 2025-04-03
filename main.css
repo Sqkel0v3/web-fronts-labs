@@ -1,14 +1,41 @@
+/* Общие стили */
 body {
-    background-color: #e0f7fa; /* Светло-голубой фон */
-    color: #333; /* Темно-серый цвет текста */
+    background-color: #e0f7fa;
+    color: #333;
     font-family: Arial, sans-serif;
     font-size: 18px;
     margin: 0;
     padding: 0;
 }
 
+/* Стили для ссылок (правильный порядок LVHA) */
+a:link {
+    color: #00796b; /* Непосещенные ссылки */
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+a:visited {
+    color: #4a148c; /* Посещенные ссылки */
+    text-decoration: line-through;
+}
+
+a:hover {
+    color: #d32f2f; /* Красный при наведении */
+    text-decoration: underline;
+    background-color: #ffebee;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    transform: scale(1.02);
+}
+
+a:active {
+    color: #000000; /* Черный при нажатии */
+    opacity: 0.7;
+    transform: scale(0.98);
+}
+
 header {
-    background-color: #0277bd; /* Темно-синий фон */
+    background-color: #0277bd;
     color: white;
     text-align: center;
     padding: 15px;
@@ -17,11 +44,11 @@ header {
 
 main {
     padding: 20px;
-    background-color: #ffffff; /* Белый фон */
+    background-color: #ffffff;
 }
 
 footer {
-    background-color: #004d40; /* Темно-зеленый */
+    background-color: #004d40;
     color: white;
     text-align: center;
     padding: 10px;
@@ -31,10 +58,6 @@ footer {
 a {
     color: #00796b; /* Темно-зеленый цвет ссылок */
     text-decoration: none; /* Убираем подчеркивание */
-}
-
-a:hover {
-    text-decoration: underline; /* Подчеркивание при наведении */
 }
 
 /* 1. Эйнштейн - научный стиль с радужным градиентом */
