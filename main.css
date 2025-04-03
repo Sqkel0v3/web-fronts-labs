@@ -47,6 +47,7 @@ header {
 main {
     padding: 20px;
     background-color: #ffffff;
+    margin: 10px 20px 45px;
 }
 
 div.menu {
@@ -68,6 +69,10 @@ footer {
     text-align: center;
     padding: 10px;
     font-size: 16px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
 a {
