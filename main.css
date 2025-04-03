@@ -36,3 +36,103 @@ a {
 a:hover {
     text-decoration: underline; /* Подчеркивание при наведении */
 }
+
+/* 1. Эйнштейн - научный стиль с радужным градиентом */
+.citation.einstein {
+    background: linear-gradient(45deg, 
+      #ff0000, #ff8000, #ffff00, #00ff00, 
+      #0000ff, #4b0082, #ee82ee);
+    border: 3px solid #2c3e50;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  }
+
+/* 2. Достоевский - тёмная тема с золотым текстом */
+.citation.dostoevsky {
+    background: linear-gradient(135deg, #1a1a1a, #3d3d3d);
+    border: 2px solid #d4af37;
+    color: #d4af37;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+  }
+  
+  /* 3. Да Винчи - элегантный градиент */
+  .citation.davinci {
+    background: linear-gradient(to right, #e0f7fa, #b2ebf2);
+    border: 1px dashed #00838f;
+    box-shadow: 3px 3px 10px rgba(0,131,143,0.3);
+  }
+  
+  /* 4. Тэтчер - британский флаг */
+  .citation.thatcher {
+    background: linear-gradient(135deg, #012169, #c8102e, white);
+    border: 3px double #012169;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+  }
+  
+  /* 5. Брюс Ли - энергичный стиль */
+  .citation.brucelee {
+    background: linear-gradient(to bottom, #ff0000, #ffcc00);
+    border: 3px groove #000;
+    box-shadow: 0 0 20px rgba(255,0,0,0.5);
+  }
+  
+  /* 6. Мать Тереза - мягкие пастельные тона */
+  .citation.teresa {
+    background: linear-gradient(to right, #f8bbd0, #e1bee7);
+    border: 2px dotted #ad1457;
+  }
+  
+  /* 7. Черчилль - классический британский */
+  .citation.churchill {
+    background: linear-gradient(to right, #f5f5f5, #e0e0e0);
+    border: 4px ridge #795548;
+    box-shadow: 10px 10px 5px rgba(0,0,0,0.1);
+  }
+  
+  /* 8. Конфуций - восточный стиль */
+  .citation.confucius {
+    background: linear-gradient(to bottom, #ffecb3, #d7ccc8);
+    border: 3px solid #5d4037;
+    font-family: "SimSun", serif;
+  }
+  
+  /* 9. Пикассо - абстрактный стиль */
+  .citation.picasso {
+    background: linear-gradient(45deg, #ff5722, #ffc107, #8bc34a, #2196f3);
+    border: 5px solid #000;
+  }
+  
+  /* 10. Чаплин - чёрно-белое кино */
+  .citation.chaplin {
+    background: linear-gradient(to right, #000, #333, #000);
+    color: white;
+    border: 2px solid white;
+    box-shadow: 0 0 15px rgba(255,255,255,0.3);
+  }
+  
+  /* 11. Шанель - элегантный чёрный */
+  .citation.chanel {
+    background: linear-gradient(to right, #000, #333);
+    color: white;
+    border: 1px solid #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+  }
+  
+  /* Общие стили для текста и автора */
+  .text {
+    font-size: 26px;
+    margin-bottom: 15px;
+    padding: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .author {
+    font-size: 24px;
+    font-style: italic;
+    padding: 10px;
+    text-align: right;
+    opacity: 0.9;
+  }
