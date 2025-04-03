@@ -49,6 +49,19 @@ main {
     background-color: #ffffff;
 }
 
+div.menu {
+    border: 7px solid #00880080;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0 auto;
+}
+
+div.menu:hover{
+    background-color: #ffffff30;
+    box-shadow: 0 0 15px #00000030;
+}
+
+
 footer {
     background-color: #004d40;
     color: white;
