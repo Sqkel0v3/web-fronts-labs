@@ -104,7 +104,7 @@ a {
     text-decoration: none; /* Убираем подчеркивание */
 }
 
-/* 1. Эйнштейн - научный стиль с радужным градиентом */
+/* 1. Эйнштейн */
 .citation.einstein {
     background: linear-gradient(45deg, 
       #ff0000, #ff8000, #ffff00, #00ff00, 
@@ -115,7 +115,7 @@ a {
     box-shadow: 0 0 25px rgba(0,0,0,0.3);
   }
 
-/* 2. Достоевский - тёмная тема с золотым текстом */
+/* 2. Достоевский */
 .citation.dostoevsky {
     background: linear-gradient(135deg, #1a1a1a, #3d3d3d);
     border: 2px solid #d4af37;
@@ -123,14 +123,14 @@ a {
     box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
   }
   
-  /* 3. Да Винчи - элегантный градиент */
+  /* 3. Да Винчи */
   .citation.davinci {
     background: linear-gradient(to right, #e0f7fa, #b2ebf2);
     border: 1px dashed #00838f;
     box-shadow: 3px 3px 10px rgba(0,131,143,0.3);
   }
   
-  /* 4. Тэтчер - британский флаг */
+  /* 4. Тэтчер */
   .citation.thatcher {
     background: linear-gradient(135deg, #012169, #c8102e, white);
     border: 3px double #012169;
@@ -138,40 +138,40 @@ a {
     text-shadow: 1px 1px 2px black;
   }
   
-  /* 5. Брюс Ли - энергичный стиль */
+  /* 5. Брюс Ли */
   .citation.brucelee {
     background: linear-gradient(to bottom, #ff0000, #ffcc00);
     border: 3px groove #000;
     box-shadow: 0 0 20px rgba(255,0,0,0.5);
   }
   
-  /* 6. Мать Тереза - мягкие пастельные тона */
+  /* 6. Мать Тереза */
   .citation.teresa {
     background: linear-gradient(to right, #f8bbd0, #e1bee7);
     border: 2px dotted #ad1457;
   }
   
-  /* 7. Черчилль - классический британский */
+  /* 7. Черчилль */
   .citation.churchill {
     background: linear-gradient(to right, #f5f5f5, #e0e0e0);
     border: 4px ridge #795548;
     box-shadow: 10px 10px 5px rgba(0,0,0,0.1);
   }
   
-  /* 8. Конфуций - восточный стиль */
+  /* 8. Конфуций */
   .citation.confucius {
     background: linear-gradient(to bottom, #ffecb3, #d7ccc8);
     border: 3px solid #5d4037;
     font-family: "SimSun", serif;
   }
   
-  /* 9. Пикассо - абстрактный стиль */
+  /* 9. Пикассо */
   .citation.picasso {
     background: linear-gradient(45deg, #ff5722, #ffc107, #8bc34a, #2196f3);
     border: 5px solid #000;
   }
   
-  /* 10. Чаплин - чёрно-белое кино */
+  /* 10. Чаплин */
   .citation.chaplin {
     background: linear-gradient(to right, #000, #333, #000);
     color: white;
@@ -179,7 +179,7 @@ a {
     box-shadow: 0 0 15px rgba(255,255,255,0.3);
   }
   
-  /* 11. Шанель - элегантный чёрный */
+  /* 11. Шанель */
   .citation.chanel {
     background: linear-gradient(to right, #000, #333);
     color: white;
@@ -203,3 +203,91 @@ a {
     text-align: right;
     opacity: 0.9;
   }
+
+.discount {
+    margin: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.discount h2 {
+    color: #2c3e50;
+    cursor: pointer;
+}
+
+.discount .content {
+    display: none;
+}
+
+.discount h2:hover + .content {
+    display: block;
+    color: #34495e;
+}
+
+/* Блоки с inline-block */
+.block-container {
+    margin: 20px;
+}
+
+.block {
+    display: inline-block;
+    width: 250px;
+    margin: 10px;
+    padding: 15px;
+    border: 1px solid #3498db;
+    border-radius: 8px;
+    vertical-align: top;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.block h3 {
+    color: #2980b9;
+    margin-bottom: 10px;
+}
+
+b {
+    display: none;
+}
+
+b.custom {
+    display: inline-block;
+    background-color: #f1c40f;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* Общие стили */
+.discount {
+    display: inline-block;
+    width: 280px;
+    margin: 15px;
+    padding: 25px;
+    border-radius: 12px;
+    vertical-align: top;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+}
+
+.discount h1 {
+    color: #fff;
+    font-size: 1.3em;
+    margin: -25px -25px 20px -25px;
+    padding: 15px 25px;
+    border-radius: 12px 12px 0 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+.discount div {
+    color: #495057;
+    line-height: 1.7;
+    font-size: 0.95em;
+    padding: 10px 0;
+}
