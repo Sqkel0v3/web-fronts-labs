@@ -91,7 +91,7 @@ footer {
     background-color: #004d40;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 2px;
     font-size: 16px;
     position: fixed;
     bottom: 0;
@@ -290,4 +290,55 @@ b.custom {
     line-height: 1.7;
     font-size: 0.95em;
     padding: 10px 0;
+}
+/* Стили для текстовых блоков */
+.text-block {
+    margin: 20px auto;
+    padding: 20px;
+    max-height: 80px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: all 2s ease;
+}
+
+.text-block:hover {
+    max-height: 1000px;
+    background: #f8f9ff;
+    border-color: #4a90e2;
+}
+
+.text-block .title {
+    color: #333;
+    font-size: 1.8rem;
+    text-align: center;
+    margin: 0 0 15px 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.text-block:hover .title {
+    color: #d35400;
+    border-bottom-color: #ffd6b3;
+}
+
+.text-block .content {
+    color: #555;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 2s ease;
+}
+
+.text-block:hover .content {
+    opacity: 1;
+    transform: translateY(0);
+    color: #ff0000; 
+}
+
+.text-block .content p {
+    margin: 15px 0;
+    line-height: 1.6;
 }
