@@ -32,26 +32,73 @@
         </style>
         <script>
             function getNumbers() {
-                return {
-                    a: parseInt(document.getElementById('numberA').value),
-                    b: parseInt(document.getElementById('numberB').value)
-                };
+                const numA = document.getElementById('numberA');
+                const numB = document.getElementById('numberB');
+                const a = parseFloat(numA.value);
+                const b = parseFloat(numB.value);
+                return {a, b, numA, numB};
+            }
+
+            function resetStyles() {
+                document.getElementById('numberA').classList.remove('error');
+                document.getElementById('numberB').classList.remove('error');
+            }
+
+            function highlightError(input) {
+                input.classList.add('error');
+                input.focus();
+                input.select();
+            }
+
+            function validateNumbers(a, b, numA, numB) {
+                if (isNaN(a)) {
+                    alert("Первое число не является корректным числом!");
+                    highlightError(numA);
+                    return false;
+                }
+                if (isNaN(b)) {
+                    alert("Второе число не является корректным числом!");
+                    highlightError(numB);
+                    return false;
+                }
+                return true;
             }
 
             function showSum() {
-                const {a, b} = getNumbers();
-                alert(`Сумма ${a} и ${b} равна ${a + b}`);
+                resetStyles();
+                const {a, b, numA, numB} = getNumbers();
+                if (!validateNumbers(a, b, numA, numB)) return;
+                alert(`Результат сложения: ${a} + ${b} = ${a + b}`);
             }
 
             function showDifference() {
-                const {a, b} = getNumbers();
-                alert(`Разность ${a} и ${b} равна ${a - b}`);
+                resetStyles();
+                const {a, b, numA, numB} = getNumbers();
+                if (!validateNumbers(a, b, numA, numB)) return;
+                alert(`Результат вычитания: ${a} - ${b} = ${a - b}`);
             }
 
             function showProduct() {
-                const {a, b} = getNumbers();
-                alert(`Произведение ${a} и ${b} равно ${a * b}`);
+                resetStyles();
+                const {a, b, numA, numB} = getNumbers();
+                if (!validateNumbers(a, b, numA, numB)) return;
+                alert(`Результат умножения: ${a} * ${b} = ${a * b}`);
             }
+
+            function showDivision() {
+                resetStyles();
+                const {a, b, numA, numB} = getNumbers();
+                if (!validateNumbers(a, b, numA, numB)) return;
+                
+                if (b === 0) {
+                    alert("Ошибка: деление на ноль невозможно!");
+                    highlightError(numB);
+                    return;
+                }
+                
+                alert(`Результат деления: ${a} / ${b} = ${a / b}`);
+            }
+
 
             function showAuthor() {
                 alert("Автор страницы:\nФомченко Роман Дмитриевич");
@@ -73,10 +120,12 @@
             <label>Первое число: <input type="number" id="numberA" value="0"></label><br>
             <label>Второе число: <input type="number" id="numberB" value="0"></label><br>
             
-            <div class="message" onclick="showSum()">Найти сумму чисел</div>
-            <div class="message" onclick="showDifference()">Найти разность чисел</div>
-            <div class="message" onclick="showProduct()">Найти произведение чисел</div>
-            <div class="message" onclick="showAuthor()">Узнать, кто автор страницы</div>
+            <div class="message" onclick="showSum()">Сложение</div>
+            <div class="message" onclick="showDifference()">Вычитание</div>
+            <div class="message" onclick="showProduct()">Умножение</div>
+            <div class="message" onclick="showDivision()">Деление</div>
+            
+            <div class="message" style="background-color: #ffe6e6;" onclick="showAuthor()">Об авторе</div>
         </main>
 
         <footer ondblclick="showWelcome()">
