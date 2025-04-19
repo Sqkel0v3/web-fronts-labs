@@ -99,6 +99,20 @@
                 alert(`Результат деления: ${a} / ${b} = ${a / b}`);
             }
 
+            function showPower() {
+                resetStyles();
+                const {a, b, numA, numB} = getNumbers();
+                if (!validateNumbers(a, b, numA, numB)) return;
+                
+                if (a === 0 && b === 0) {
+                    alert("Ошибка: 0 в степени 0 - неопределённое выражение!");
+                    highlightError(numA);
+                    highlightError(numB);
+                    return;
+                }
+                
+                alert(`Результат возведения в степень: ${a}^${b} = ${Math.pow(a, b)}`);
+            }
 
             function showAuthor() {
                 alert("Автор страницы:\nФомченко Роман Дмитриевич");
@@ -124,7 +138,7 @@
             <div class="message" onclick="showDifference()">Вычитание</div>
             <div class="message" onclick="showProduct()">Умножение</div>
             <div class="message" onclick="showDivision()">Деление</div>
-            
+            <div class="message" onclick="showPower()">Возведение в степень</div>
             <div class="message" style="background-color: #ffe6e6;" onclick="showAuthor()">Об авторе</div>
         </main>
 
