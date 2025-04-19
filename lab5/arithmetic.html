@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Фомченко Роман Дмитриевич. Лабораторная работа 5</title>
+        <link rel="stylesheet" href="../main.css">
+        <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+        <link rel="icon" href="../favicon-16x16.png">
+        <link rel="icon" href="../favicon-32x32.png">
+        <style>
+            header {
+                cursor: pointer;
+            }
+
+            footer {
+                cursor: help;
+            }
+
+            .message {
+                cursor: pointer;
+                display: inline-block;
+                width: 250px;
+                height: 30px;
+                border-radius: 5%;
+                border: 5px solid #4682B4;
+                text-align: center;
+                line-height: 30px;
+                margin: 5px;
+                background-color: #F0F8FF;
+                font-weight: bold;
+            }
+        </style>
+        <script>
+            function showSum() {
+                let a = 5154;
+                let b = 7891;
+                let result = a + b;
+                alert('Сколько будет 5154+7891?\n\nСумма ' + a + ' и ' + b + ' равна ' + result);
+            }
+
+            function showAuthor() {
+                let author = "Автор страницы:\nФомченко Роман Дмитриевич";
+                alert(author);
+            }
+
+            function showWelcome() {
+                let welcome = "Приветствую вас на моей странице!\n\nДевиз: Учись, развивайся, достигай!";
+                alert(welcome);
+            }
+        </script>
+    </head>
+
+    <body>
+        <header onclick="showAuthor()">
+            НГТУ, ФБ, Лабораторная работа 5
+            <hr>
+        </header>
+
+        <main>
+            <div class="message" onclick="showSum()">Сколько будет 5154+7891?</div>
+            <div class="message" onclick="showAuthor()">Узнать, кто автор страницы</div>
+        </main>
+
+        <footer ondblclick="showWelcome()">
+            <hr>
+            &copy; Фомченко Роман Дмитриевич, ФБИ-34, 2 курс, 2025
+        </footer>
+    </body>
+</html>
