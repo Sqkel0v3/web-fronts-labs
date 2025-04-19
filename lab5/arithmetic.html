@@ -31,14 +31,26 @@
             }
         </style>
         <script>
+            function getNumbers() {
+                return {
+                    a: parseInt(document.getElementById('numberA').value),
+                    b: parseInt(document.getElementById('numberB').value)
+                };
+            }
+
             function showSum() {
-                let inputA = document.getElementById('numberA');
-                let inputB = document.getElementById('numberB');
-                
-                let a = parseInt(inputA.value);
-                let b = parseInt(inputB.value);
-                let result = a + b;
-                alert('Сумма ' + a + ' и ' + b + ' равна ' + result);
+                const {a, b} = getNumbers();
+                alert(`Сумма ${a} и ${b} равна ${a + b}`);
+            }
+
+            function showDifference() {
+                const {a, b} = getNumbers();
+                alert(`Разность ${a} и ${b} равна ${a - b}`);
+            }
+
+            function showProduct() {
+                const {a, b} = getNumbers();
+                alert(`Произведение ${a} и ${b} равно ${a * b}`);
             }
 
             function showAuthor() {
@@ -62,6 +74,8 @@
             <label>Второе число: <input type="number" id="numberB" value="0"></label><br>
             
             <div class="message" onclick="showSum()">Найти сумму чисел</div>
+            <div class="message" onclick="showDifference()">Найти разность чисел</div>
+            <div class="message" onclick="showProduct()">Найти произведение чисел</div>
             <div class="message" onclick="showAuthor()">Узнать, кто автор страницы</div>
         </main>
 
