@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>ЭЛ5-Энерго | Новости</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      background-color: #f5f9ff;
+      color: #333;
+    }
+    header, nav, footer {
+      background-color: #002d72;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    nav a:hover {
+      background-color: #c9e207;
+      color: #002d72;
+    }
+    .logo {
+      height: 120px;
+      transition: transform 0.5s ease;
+    }
+    .logo:hover {
+      transform: rotate(5deg) scale(1.05);
+    }
+    main {
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    h1 {
+      color: #002d72;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    h1::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 3px;
+      background-color: #c9e207;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    .news-card {
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .news-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .news-content {
+      padding: 20px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .news-date {
+      color: #666;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+    .news-title {
+      color: #002d72;
+      margin: 0 0 15px 0;
+      font-size: 1.3em;
+    }
+    .news-preview {
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .news-full {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    .read-more {
+      background-color: #002d72;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background-color 0.3s ease;
+      margin-top: auto;
+    }
+    .read-more:hover {
+      background-color: #c9e207;
+    }
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #002d72;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scroll-top:hover {
+      background-color: #c9e207;
+      transform: translateY(-5px);
+    }
+    footer {
+      margin-top: 50px;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+    .active {
+      background-color: rgba(201, 226, 7, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+<header class="animate__animated animate__fadeInDown">
+  <img src="el5.jpg" alt="Логотип ЭЛ5-Энерго" class="logo">
+  <h1>ЭЛ5-Энерго</h1>
+</header>
+
+<nav class="animate__animated animate__fadeIn animate__delay-1s">
+  <a href="company.html">О компании</a>
+  <a href="news.html" class="active">Новости</a>
+  <a href="currency.html">Курс валют</a>
+  <a href="contacts.html">Контакты</a>
+  <a href="video.html">Видео</a>
+</nav>
+
+<main>
+  <h1 class="animate__animated animate__fadeIn">Последние новости</h1>
+  
+  <div class="news-container">
+    <!-- Новость 1 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="panel.jpg" alt="Солнечная электростанция" class="news-image">
+      <div class="news-content">
+        <div class="news-date">15 мая 2025</div>
+        <h3 class="news-title">Запуск новой солнечной электростанции в Краснодарском крае</h3>
+        <div class="news-preview">
+          <p>Компания ЭЛ5-Энерго завершила строительство солнечной электростанции мощностью 50 МВт. Объект расположен на площади 100 гектаров и сможет обеспечить электроэнергией около 20 тысяч домохозяйств.</p>
+        </div>
+        <div class="news-full">
+          <p>Станция оснащена современными двусторонними солнечными панелями, которые повышают эффективность генерации на 15-20%. Инвестиции в проект составили 3,5 млрд рублей. В рамках проекта создано 120 новых рабочих мест.</p>
+          <p>Это уже третья солнечная электростанция компании в регионе, что делает ЭЛ5-Энерго лидером в области возобновляемой энергетики на юге России.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 2 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="ai.jpg" alt="Технологии" class="news-image">
+      <div class="news-content">
+        <div class="news-date">8 мая 2025</div>
+        <h3 class="news-title">Внедрение AI-системы управления энергосетями</h3>
+        <div class="news-preview">
+          <p>ЭЛ5-Энерго внедряет инновационную систему искусственного интеллекта для оптимизации работы энергосетей. Система позволит сократить потери электроэнергии на 7-10% и повысить надежность поставок.</p>
+        </div>
+        <div class="news-full">
+          <p>Новая AI-платформа анализирует данные с тысяч датчиков в реальном времени, прогнозирует нагрузку и автоматически перераспределяет потоки электроэнергии. Разработка велась совместно с российскими IT-компаниями и уже показала отличные результаты в пилотных регионах.</p>
+          <p>Полный переход на новую систему управления планируется завершить к концу 2026 года.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 3 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="goda.jpg" alt="Награждение" class="news-image">
+      <div class="news-content">
+        <div class="news-date">28 апреля 2025</div>
+        <h3 class="news-title">ЭЛ5-Энерго признана "Компанией года" в энергетике</h3>
+        <div class="news-preview">
+          <p>На ежегодной премии "Энергия будущего" компания ЭЛ5-Энерго получила главную награду в номинации "Компания года". Жюри отметило инновационные проекты и высокие экологические стандарты компании.</p>
+        </div>
+        <div class="news-full">
+          <p>Премия вручена за комплексный подход к развитию энергетики, включающий как традиционные, так и возобновляемые источники энергии. Особо отмечены проекты по модернизации ТЭС с сокращением выбросов на 40% и развитие ветропарков на севере России.</p>
+          <p>Генеральный директор компании Алибек Тналин в своей благодарственной речи подчеркнул, что это достижение всего коллектива ЭЛ5-Энерго, который насчитывает более 5000 сотрудников.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 4 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="stip.jpg" alt="Обучение" class="news-image">
+      <div class="news-content">
+        <div class="news-date">15 апреля 2025</div>
+        <h3 class="news-title">Старт образовательной программы для молодых энергетиков</h3>
+        <div class="news-preview">
+          <p>ЭЛ5-Энерго совместно с ведущими техническими вузами запускает программу подготовки специалистов в области возобновляемой энергетики. Первый набор составит 150 человек.</p>
+        </div>
+        <div class="news-full">
+          <p>Программа включает теоретическое обучение в университетах и практику на объектах компании. Лучшие выпускники получат возможность трудоустройства в ЭЛ5-Энерго с конкурентной зарплатой и перспективами карьерного роста.</p>
+          <p>"Инвестиции в образование - это инвестиции в наше энергетическое будущее", - отметила директор по персоналу компании Марина Орлова на презентации программы.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 5 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="stansia.jpeg" alt="Строительство" class="news-image">
+      <div class="news-content">
+        <div class="news-date">2 апреля 2025</div>
+        <h3 class="news-title">Начато строительство новой подстанции в Московской области</h3>
+        <div class="news-preview">
+          <p>ЭЛ5-Энерго приступила к строительству современной подстанции 220 кВ в Подмосковье. Объект обеспечит надежное энергоснабжение быстрорастущего жилого района и промышленной зоны.</p>
+        </div>
+        <div class="news-full">
+          <p>Новая подстанция будет оснащена цифровой системой управления и экологичным оборудованием. Срок реализации проекта - 18 месяцев, бюджет - 2,8 млрд рублей.</p>
+          <p>Это уже седьмой подобный объект компании в регионе. Особенностью проекта станет интеграция с будущими объектами возобновляемой энергетики.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 6 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="result.jpg" alt="Финансы" class="news-image">
+      <div class="news-content">
+        <div class="news-date">20 марта 2025</div>
+        <h3 class="news-title">Финансовые результаты за 2024 год превысили ожидания</h3>
+        <div class="news-preview">
+          <p>ЭЛ5-Энерго опубликовала финансовый отчет за 2024 год. Выручка компании составила 145 млрд рублей, что на 12% выше показателя 2023 года. Чистая прибыль выросла на 18%.</p>
+        </div>
+        <div class="news-full">
+          <p>Рост показателей связан с успешной реализацией инфраструктурных проектов и повышением эффективности работы существующих активов. Доля возобновляемой энергетики в выручке составила 25%, увеличившись на 5% по сравнению с предыдущим годом.</p>
+          <p>Компания объявила о планах инвестировать 30 млрд рублей в развитие инфраструктуры в 2025 году, включая проекты в области "зеленой" энергетики.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 7 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="top.jpg" alt="Экология" class="news-image">
+      <div class="news-content">
+        <div class="news-date">10 марта 2025</div>
+        <h3 class="news-title">ЭЛ5-Энерго вошла в топ-5 экологичных компаний России</h3>
+        <div class="news-preview">
+          <p>По результатам рейтинга "Экология и бизнес" за 2024 год компания ЭЛ5-Энерго заняла 4 место среди российских компаний по экологическим показателям.</p>
+        </div>
+        <div class="news-full">
+          <p>Эксперты отметили системную работу компании по снижению углеродного следа, внедрению наилучших доступных технологий и развитию возобновляемых источников энергии. За последние 5 лет ЭЛ5-Энерго сократила выбросы на 35% при росте производства энергии на 22%.</p>
+          <p>"Мы рассматриваем экологическую ответственность как неотъемлемую часть нашего бизнеса", - заявил директор по устойчивому развитию компании.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 8 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="proect.jpg" alt="Технологии" class="news-image">
+      <div class="news-content">
+        <div class="news-date">25 февраля 2025</div>
+        <h3 class="news-title">Запуск пилотного проекта по накоплению энергии</h3>
+        <div class="news-preview">
+          <p>ЭЛ5-Энерго тестирует новую систему накопления энергии на основе литий-ионных аккумуляторов. Пилотный проект реализуется на одной из солнечных электростанций компании.</p>
+        </div>
+        <div class="news-full">
+          <p>Система мощностью 5 МВт/10 МВт·ч позволит накапливать избыточную энергию в дневное время и отдавать ее в сеть в часы пиковой нагрузки. Это повысит стабильность энергоснабжения и эффективность использования солнечной генерации.</p>
+          <p>В случае успешных испытаний компания планирует масштабировать технологию на других своих объектах возобновляемой энергетики.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 9 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="sogl.webp" alt="Партнерство" class="news-image">
+      <div class="news-content">
+        <div class="news-date">12 февраля 2025</div>
+        <h3 class="news-title">Соглашение о сотрудничестве с немецкой компанией E.ON</h3>
+        <div class="news-preview">
+          <p>ЭЛ5-Энерго подписала меморандум о сотрудничестве с немецким энергетическим концерном E.ON. Стороны будут совместно разрабатывать проекты в области цифровизации энергосетей.</p>
+        </div>
+        <div class="news-full">
+          <p>Партнерство предусматривает обмен технологиями, совместные исследования и обучение специалистов. Первым проектом станет внедрение "умных" счетчиков нового поколения в пилотном регионе.</p>
+          <p>"Сотрудничество с мировым лидером энергетики ускорит нашу цифровую трансформацию", - отметил технический директор ЭЛ5-Энерго.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+
+    <!-- Новость 10 -->
+    <article class="news-card animate__animated animate__fadeInUp">
+      <img src="hokkey.jpg" alt="Спорт" class="news-image">
+      <div class="news-content">
+        <div class="news-date">30 января 2025</div>
+        <h3 class="news-title">ЭЛ5-Энерго стала титульным спонсором хоккейного клуба</h3>
+        <div class="news-preview">
+          <p>Компания заключила трехлетнее соглашение о партнерстве с хоккейным клубом из КХЛ. Логотип ЭЛ5-Энерго будет размещен на форме игроков.</p>
+        </div>
+        <div class="news-full">
+          <p>Спонсорский пакет включает также поддержку детской хоккейной школы и совместные социальные проекты. Компания планирует использовать партнерство для популяризации ценностей здорового образа жизни и командной работы среди сотрудников и их семей.</p>
+          <p>"Хоккей - это динамика, энергия и командный дух, что полностью соответствует ценностям нашей компании", - пояснил выбор спорта директор по коммуникациям ЭЛ5-Энерго.</p>
+        </div>
+        <button class="read-more">Читать далее</button>
+      </div>
+    </article>
+  </div>
+</main>
+
+<button class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">↑</button>
+
+<footer class="animate__animated animate__fadeIn animate__delay-1s">
+  &copy; 2025 ЭЛ5-Энерго | Все права защищены
+</footer>
+
+<script>
+  // Показываем кнопку "Наверх" при прокрутке
+  window.addEventListener('scroll', function() {
+    const scrollTop = document.querySelector('.scroll-top');
+    if (window.pageYOffset > 300) {
+      scrollTop.classList.add('visible');
+    } else {
+      scrollTop.classList.remove('visible');
+    }
+  });
+
+  // Обработка кнопок "Читать далее"
+  document.querySelectorAll('.read-more').forEach(button => {
+    button.addEventListener('click', function() {
+      const newsCard = this.closest('.news-card');
+      const fullText = newsCard.querySelector('.news-full');
+      const previewText = newsCard.querySelector('.news-preview');
+      
+      if (fullText.style.display === 'block') {
+        fullText.style.display = 'none';
+        previewText.style.display = 'block';
+        this.textContent = 'Читать далее';
+      } else {
+        fullText.style.display = 'block';
+        previewText.style.display = 'none';
+        this.textContent = 'Свернуть';
+      }
+    });
+  });
+
+  // Анимация карточек при загрузке
+  document.addEventListener('DOMContentLoaded', function() {
+    const cards = document.querySelectorAll('.news-card');
+    cards.forEach((card, index) => {
+      setTimeout(() => {
+        card.style.opacity = '1';
+      }, index * 100);
+    });
+  });
+</script>
+
+</body>
+</html>
