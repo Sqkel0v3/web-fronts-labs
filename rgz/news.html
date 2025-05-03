@@ -50,11 +50,60 @@
       padding: 0 20px;
     }
     h1 {
-      color: #002d72;
+      color: #ec6969;
       text-align: center;
       margin-bottom: 40px;
       position: relative;
     }
+
+    /* Бургер */
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+    }
+    .hamburger div {
+      width: 30px;
+      height: 4px;
+      background-color: #fff;
+      margin: 5px 0;
+      transition: 0.4s;
+    }
+
+    /* Боковое меню */
+    .side-menu {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      right: -250px;
+      background-color: #002d72;
+      color: white;
+      overflow-x: hidden;
+      padding-top: 60px;
+      transition: right 0.4s;
+      z-index: 1000;
+    }
+    .side-menu a {
+      display: block;
+      color: white;
+      padding: 15px 20px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .side-menu a:hover {
+      background-color: #c9e207;
+      color: #002d72;
+    }
+    .side-menu.open {
+      right: 0;
+    }
+
     h1::after {
       content: '';
       position: absolute;
@@ -166,19 +215,26 @@
 </head>
 <body>
 
-<header class="animate__animated animate__fadeInDown">
-  <img src="el5.jpg" alt="Логотип ЭЛ5-Энерго" class="logo">
-  <h1>ЭЛ5-Энерго</h1>
-</header>
+    <header class="animate__animated animate__fadeInDown">
+        <img src="el5.jpg" alt="Логотип ЭЛ5-Энерго" class="logo">
+        <h1>ЭЛ5-Энерго</h1>
+      </header>
+      
+      <!-- Кнопка бургер -->
+      <button class="hamburger" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+      </button>
 
-<nav class="animate__animated animate__fadeIn animate__delay-1s">
-  <a href="company.html">О компании</a>
-  <a href="news.html" class="active">Новости</a>
-  <a href="currency.html">Курс валют</a>
-  <a href="contacts.html">Контакты</a>
-  <a href="video.html">Видео</a>
-</nav>
-
+      <div class="side-menu" id="sideMenu">
+        <a href="company.html">О компании</a>
+        <a href="news.html">Новости</a>
+        <a href="currency.html">Курс валют</a>
+        <a href="contacts.html">Контакты</a>
+        <a href="video.html">Видео</a>
+      </div>
+      
 <main>
   <h1 class="animate__animated animate__fadeIn">Последние новости</h1>
   
@@ -358,49 +414,43 @@
 <button class="scroll-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">↑</button>
 
 <footer class="animate__animated animate__fadeIn animate__delay-1s">
-  &copy; 2025 ЭЛ5-Энерго | Все права защищены
+  &copy; 2025 ЭЛ5-Энерго | Фомченко Роман Дмитриевич, ФБИ-34
 </footer>
 
 <script>
-  // Показываем кнопку "Наверх" при прокрутке
-  window.addEventListener('scroll', function() {
-    const scrollTop = document.querySelector('.scroll-top');
-    if (window.pageYOffset > 300) {
-      scrollTop.classList.add('visible');
-    } else {
-      scrollTop.classList.remove('visible');
+    // Бургер-меню
+    function toggleMenu() {
+      const menu = document.querySelector('.side-menu');
+      menu.classList.toggle('open');
     }
-  });
-
-  // Обработка кнопок "Читать далее"
-  document.querySelectorAll('.read-more').forEach(button => {
-    button.addEventListener('click', function() {
-      const newsCard = this.closest('.news-card');
-      const fullText = newsCard.querySelector('.news-full');
-      const previewText = newsCard.querySelector('.news-preview');
-      
-      if (fullText.style.display === 'block') {
-        fullText.style.display = 'none';
-        previewText.style.display = 'block';
-        this.textContent = 'Читать далее';
+  
+    // Показ / скрытие полного текста новости
+    document.querySelectorAll('.read-more').forEach(button => {
+      button.addEventListener('click', () => {
+        const fullText = button.previousElementSibling;
+        fullText.style.display = fullText.style.display === 'block' ? 'none' : 'block';
+        button.textContent = fullText.style.display === 'block' ? 'Скрыть' : 'Читать далее';
+      });
+    });
+  
+    // Кнопка «наверх»
+    const scrollTopBtn = document.createElement('button');
+    scrollTopBtn.innerHTML = '↑';
+    scrollTopBtn.classList.add('scroll-top');
+    document.body.appendChild(scrollTopBtn);
+  
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollTopBtn.classList.add('visible');
       } else {
-        fullText.style.display = 'block';
-        previewText.style.display = 'none';
-        this.textContent = 'Свернуть';
+        scrollTopBtn.classList.remove('visible');
       }
     });
-  });
-
-  // Анимация карточек при загрузке
-  document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.news-card');
-    cards.forEach((card, index) => {
-      setTimeout(() => {
-        card.style.opacity = '1';
-      }, index * 100);
-    });
-  });
-</script>
+  </script>
 
 </body>
 </html>
