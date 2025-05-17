@@ -124,7 +124,6 @@
                 bars[i].style.height = (k * data[i]) + 'px';
                 bars[i].style.backgroundColor = colors[i];
                 
-                // Add value label
                 if (!bars[i].querySelector('.bar-value')) {
                     let valueLabel = document.createElement('div');
                     valueLabel.className = 'bar-value';
@@ -150,7 +149,6 @@
             for(let i = 0; i < data.length; i++) {
                 bars[i].style.height = (k * data[i]) + 'px';
                 
-                // Update value label
                 if (bars[i].querySelector('.bar-value')) {
                     bars[i].querySelector('.bar-value').textContent = data[i];
                 }
