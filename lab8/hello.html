@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лабораторная работа по Vue.js - Массивы</title>
+    <title>Лабораторная работа по Vue.js - Редактирование массива</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
@@ -29,14 +29,25 @@
             min-width: 100px;
         }
         button {
-            padding: 10px 20px;
-            margin: 0 10px;
-            font-size: 1em;
+            padding: 8px 16px;
+            margin: 0 5px;
+            font-size: 0.9em;
             cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+        .btn-inc {
             background-color: #42b983;
             color: white;
-            border: none;
-            border-radius: 5px;
+        }
+        .btn-dec {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-edit {
+            background-color: #3498db;
+            color: white;
+            margin-left: 10px;
         }
         .user-info {
             margin: 30px auto;
@@ -51,16 +62,25 @@
             margin: 30px auto;
             text-align: left;
             display: inline-block;
+            width: 80%;
         }
         .flowers-list ul {
             list-style-type: none;
             padding: 0;
         }
         .flowers-list li {
-            padding: 8px;
-            margin: 5px 0;
+            padding: 10px;
+            margin: 8px 0;
             background-color: #f8f8f8;
             border-left: 4px solid #42b983;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        hr {
+            margin: 30px 0;
+            border: 0;
+            border-top: 1px solid #eee;
         }
         footer {
             text-align: center;
@@ -78,8 +98,8 @@
             <!-- Счетчик -->
             <p>Счетчик: {{ counter }}</p>
             <div>
-                <button @click="incCounter" v-if="counter < 10">++</button>
-                <button @click="decCounter" v-if="counter > 0">--</button>
+                <button class="btn-inc" @click="incCounter" v-if="counter < 10">++</button>
+                <button class="btn-dec" @click="decCounter" v-if="counter > 0">--</button>
             </div>
             
             <!-- Объект пользователя -->
@@ -90,11 +110,14 @@
                 <div>Телефон: {{ user.tel }}</div>
             </div>
             
+            <hr>
+            
             <div class="flowers-list">
-                <h2>Список цветов:</h2>
+                <h2>Цветы</h2>
                 <ul>
-                    <li v-for="flower in flowers" :key="flower">
-                        {{ flower }}
+                    <li v-for="(flower, id) in flowers" :key="id">
+                        {{ flower }} ({{ id }})
+                        <button class="btn-edit" @click="edit(id, flower)">Редактирование</button>
                     </li>
                 </ul>
             </div>
@@ -117,7 +140,13 @@
                         age: '18',
                         tel: '222-33-44'
                     },
-                    flowers: [ 'Роза', 'Гвоздика', 'Тюльпан', 'Ромашка','Ландыш'],
+                    flowers: [
+                        'Роза',
+                        'Гвоздика',
+                        'Тюльпан',
+                        'Ромашка',
+                        'Ландыш'
+                    ]
                 }
             },
             methods: {
@@ -126,6 +155,12 @@
                 },
                 decCounter() {
                     this.counter--;
+                },
+                edit(id, flower) {
+                    const newName = prompt('Введите новое название цветка:', flower);
+                    if (newName !== null && newName.trim() !== '') {
+                        this.flowers[id] = newName;
+                    }
                 }
             }
         }).mount('#app');
