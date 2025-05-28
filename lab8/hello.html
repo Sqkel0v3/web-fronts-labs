@@ -159,7 +159,15 @@
                 edit(id, flower) {
                     const newName = prompt('Введите новое название цветка:', flower);
                     if (newName !== null && newName.trim() !== '') {
-                        this.flowers[id] = newName;
+                        // Устанавливаем временное значение и сохраняем id редактируемого элемента
+                        this.flowers[id] = 'сохранение...';
+                        this.savingId = id;
+                        
+                        // Имитация задержки отправки на сервер
+                        setTimeout(() => {
+                            this.flowers[id] = newName;
+                            this.savingId = null;
+                        }, 3000);
                     }
                 }
             }
