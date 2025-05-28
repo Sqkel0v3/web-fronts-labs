@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лабораторная работа по Vue.js - Объекты</title>
+    <title>Лабораторная работа по Vue.js - Массивы</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
@@ -38,19 +38,29 @@
             border: none;
             border-radius: 5px;
         }
-        button:hover {
-            background-color: #369f6b;
-        }
         .user-info {
-            margin-top: 30px;
+            margin: 30px auto;
             padding: 20px;
             border: 1px solid #eee;
             border-radius: 5px;
             text-align: left;
             display: inline-block;
+            width: 80%;
         }
-        .user-info div {
-            margin: 10px 0;
+        .flowers-list {
+            margin: 30px auto;
+            text-align: left;
+            display: inline-block;
+        }
+        .flowers-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .flowers-list li {
+            padding: 8px;
+            margin: 5px 0;
+            background-color: #f8f8f8;
+            border-left: 4px solid #42b983;
         }
         footer {
             text-align: center;
@@ -64,19 +74,29 @@
     <main>
         <div id="app">
             <h1 :title="messageRus">{{ message }}</h1>
-            <p>Счетчик: {{ counter }}</p>
             
-            <!-- Кнопки с условиями отображения -->
+            <!-- Счетчик -->
+            <p>Счетчик: {{ counter }}</p>
             <div>
                 <button @click="incCounter" v-if="counter < 10">++</button>
                 <button @click="decCounter" v-if="counter > 0">--</button>
             </div>
-        
+            
+            <!-- Объект пользователя -->
             <div class="user-info">
                 <h2>Пользователь:</h2>
                 <div>Имя: {{ user.name }}</div>
                 <div>Возраст: {{ user.age }}</div>
                 <div>Телефон: {{ user.tel }}</div>
+            </div>
+            
+            <div class="flowers-list">
+                <h2>Список цветов:</h2>
+                <ul>
+                    <li v-for="flower in flowers" :key="flower">
+                        {{ flower }}
+                    </li>
+                </ul>
             </div>
         </div>
     </main>
@@ -96,7 +116,8 @@
                         name: 'Вася',
                         age: '18',
                         tel: '222-33-44'
-                    }
+                    },
+                    flowers: [ 'Роза', 'Гвоздика', 'Тюльпан', 'Ромашка','Ландыш'],
                 }
             },
             methods: {
