@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лабораторная работа по Vue.js - Счетчик</title>
+    <title>Лабораторная работа по Vue.js - Объекты</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
@@ -41,9 +41,16 @@
         button:hover {
             background-color: #369f6b;
         }
-        button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
+        .user-info {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            text-align: left;
+            display: inline-block;
+        }
+        .user-info div {
+            margin: 10px 0;
         }
         footer {
             text-align: center;
@@ -64,6 +71,13 @@
                 <button @click="incCounter" v-if="counter < 10">++</button>
                 <button @click="decCounter" v-if="counter > 0">--</button>
             </div>
+        
+            <div class="user-info">
+                <h2>Пользователь:</h2>
+                <div>Имя: {{ user.name }}</div>
+                <div>Возраст: {{ user.age }}</div>
+                <div>Телефон: {{ user.tel }}</div>
+            </div>
         </div>
     </main>
 
@@ -77,7 +91,12 @@
                 return {
                     message: 'Hello!',
                     messageRus: 'Привет!',
-                    counter: 0
+                    counter: 1,
+                    user: {
+                        name: 'Вася',
+                        age: '18',
+                        tel: '222-33-44'
+                    }
                 }
             },
             methods: {
