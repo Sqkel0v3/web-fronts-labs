@@ -38,10 +38,6 @@
             background-color: #e74c3c;
             color: white;
         }
-        .btn-edit {
-            background-color: #3498db;
-            color: white;
-        }
         .user-info {
             margin: 30px auto;
             padding: 20px;
@@ -61,6 +57,12 @@
             padding: 10px;
             background-color: hsl(199, 100%, 50%);
             margin-top: 20px;
+        }
+        .calculator-container {
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #eee;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -110,13 +112,15 @@
             
             <hr>
             
-            <!-- Список цветов -->
+            <!-- Список цветов с Bootstrap -->
             <div class="flowers-list">
-                <h2>Цветы (список)</h2>
-                <ul>
-                    <li v-for="(flower, id) in flowers" :key="id">
-                        {{ flower }} ({{ id }})
-                        <button class="btn-edit" @click="edit(id, flower)">Редактировать</button>
+                <h2>Цветы список</h2>
+                <ul class="list-group w-75 mx-auto">
+                    <li v-for="(flower, id) in flowers" :key="id" class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ flower }} (ID: {{ id }})
+                        <button @click="edit(id, flower)" class="btn btn-outline-primary btn-sm">
+                            Редактировать
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -126,7 +130,7 @@
             <!-- Таблица цветов с Bootstrap -->
             <div class="flowers-table">
                 <h2>Цветы (таблица)</h2>
-                <table class="table table-danger table-striped table-hover">
+                <table class="table table-danger table-striped table-hover w-75 mx-auto">
                     <thead class="table-dark">
                         <tr>
                             <th>ID</th>
