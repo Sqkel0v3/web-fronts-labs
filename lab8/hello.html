@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Лабораторная работа по Vue.js</title>
+    <title>Лабораторная работа по Vue.js - Счетчик</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         body {
@@ -16,6 +16,9 @@
         #app {
             text-align: center;
             margin: 20px 0;
+        }
+        h1 {
+            cursor: help;
         }
         .counter {
             font-size: 2em;
@@ -38,6 +41,10 @@
         button:hover {
             background-color: #369f6b;
         }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
         footer {
             text-align: center;
             padding: 10px;
@@ -50,14 +57,12 @@
     <main>
         <div id="app">
             <h1 :title="messageRus">{{ message }}</h1>
+            <p>Счетчик: {{ counter }}</p>
             
-            <!-- Счетчик как на Рисунках 11-12 -->
-            <div class="counter">{{ counter }}</div>
-            
-            <!-- Кнопки как на Рисунках 13-17 -->
+            <!-- Кнопки с условиями отображения -->
             <div>
-                <button @click="decCounter">--</button>
-                <button @click="incCounter">++</button>
+                <button @click="incCounter" v-if="counter < 10">++</button>
+                <button @click="decCounter" v-if="counter > 0">--</button>
             </div>
         </div>
     </main>
@@ -72,15 +77,13 @@
                 return {
                     message: 'Hello!',
                     messageRus: 'Привет!',
-                    counter: 0  // Добавляем счетчик
+                    counter: 0
                 }
             },
             methods: {
-                // Метод для увеличения счетчика (Рисунки 14-16)
                 incCounter() {
                     this.counter++;
                 },
-                // Метод для уменьшения счетчика (Рисунок 17)
                 decCounter() {
                     this.counter--;
                 }
