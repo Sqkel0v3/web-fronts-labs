@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чек-лист для преподавателей Azat Academy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --danger: #f72585;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(67, 97, 238, 0.3);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .tabs-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+        
+        .tabs {
+            display: flex;
+            background: var(--light);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        
+        .tabs::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .tab {
+            padding: 18px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .tab:hover {
+            color: var(--primary);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background: white;
+        }
+        
+        .tab i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        h2 i {
+            margin-right: 12px;
+            color: var(--secondary);
+        }
+        
+        h3 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            margin: 20px 0 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        h3 i {
+            margin-right: 10px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .card-title {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+        }
+        
+        .note {
+            background: #f0f7ff;
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .warning {
+            background: #fff8f0;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        .danger {
+            background: #fff0f5;
+            border-left: 4px solid var(--danger);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .tab {
+                padding: 15px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-check-circle"></i> Чек-лист преподавателя</h1>
+            <p class="subtitle">Всё самое важное для преподавателей Azat Academy в одном месте</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab active" onclick="openTab(event, 'new-teacher')">
+                    <i class="fas fa-user-plus"></i> Новый преподаватель
+                </div>
+                <div class="tab" onclick="openTab(event, 'trial-lesson')">
+                    <i class="fas fa-star"></i> Пробный урок
+                </div>
+                <div class="tab" onclick="openTab(event, 'important')">
+                    <i class="fas fa-exclamation-circle"></i> Важно
+                </div>
+                <div class="tab" onclick="openTab(event, 'problems')">
+                    <i class="fas fa-question-circle"></i> Решение проблем
+                </div>
+            </div>
+            
+            <div id="new-teacher" class="tab-content active">
+                <div class="section">
+                    <h2><i class="fas fa-user-graduate"></i> Для нового преподавателя</h2>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-tasks"></i> Обязанности и требования</div>
+                        <ul>
+                            <li>Проведение занятий согласно расписанию</li>
+                            <li>Подготовка учебных материалов</li>
+                            <li>Своевременная отчетность</li>
+                            <li>Участие в методических собраниях</li>
+                            <li>Соблюдение стандартов академии</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-exclamation-triangle"></i> Штрафы и увольнение</div>
+                        <ul>
+                            <li>Опоздание более 10 минут - штраф 500₽</li>
+                            <li>Несвоевременная отчетность - штраф 300₽</li>
+                            <li>3 пропуска без уважительной причины - увольнение</li>
+                            <li>Нарушение этики общения - предупреждение или увольнение</li>
+                        </ul>
+                        <div class="warning">
+                            <i class="fas fa-info-circle"></i> Все штрафы вычитаются из бонусной части зарплаты.
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-list-ol"></i> Процесс работы в академии</div>
+                        <ol>
+                            <li>Подписание договора</li>
+                            <li>Ознакомление с методическими материалами</li>
+                            <li>Прохождение обучающего курса (3 дня)</li>
+                            <li>Проведение пробных уроков с куратором</li>
+                            <li>Получение собственных учеников</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-money-bill-wave"></i> Зарплата преподавателя</div>
+                        <ul>
+                            <li>Ставка за академический час: 500-1200₽ (в зависимости от предмета и квалификации)</li>
+                            <li>Бонус за положительные отзывы: +10% к ставке</li>
+                            <li>Премия за удержание учеников более 3 месяцев: 3000₽</li>
+                            <li>Выплаты 2 раза в месяц (5 и 20 числа)</li>
+                        </ul>
+                        <div class="note">
+                            <i class="fas fa-lightbulb"></i> Максимальный доход топовых преподавателей достигает 150 000₽ в месяц!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="trial-lesson" class="tab-content">
+                <div class="section">
+                    <h2><i class="fas fa-star"></i> Пробный урок</h2>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-bullseye"></i> Цель пробного урока</div>
+                        <ul>
+                            <li>Познакомиться с учеником и установить контакт</li>
+                            <li>Определить уровень знаний ученика</li>
+                            <li>Выявить цели и ожидания от занятий</li>
+                            <li>Продемонстрировать свой стиль преподавания</li>
+                            <li>Заключить договор на дальнейшие занятия</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-book"></i> Подготовка к пробному занятию</div>
+                        <ol>
+                            <li>Изучить анкету ученика</li>
+                            <li>Подготовить тест для определения уровня</li>
+                            <li>Продумать структуру урока</li>
+                            <li>Подготовить примеры задач</li>
+                            <li>Проверить технику (камера, микрофон, интернет)</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-calendar-check"></i> Организационные моменты</div>
+                        <ul>
+                            <li>Прийти на платформу за 10 минут до начала</li>
+                            <li>Проверить подключение ученика</li>
+                            <li>Отправить приветственное сообщение</li>
+                            <li>Иметь под рукой все необходимые материалы</li>
+                            <li>Заполнить форму отчета после урока</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-project-diagram"></i> Пример плана пробного урока (математика)</div>
+                        <ol>
+                            <li>Знакомство (5 мин)</li>
+                            <li>Беседа о целях ученика (5 мин)</li>
+                            <li>Небольшой тест (15 мин)</li>
+                            <li>Разбор ошибок (10 мин)</li>
+                            <li>Решение интересной задачи (10 мин)</li>
+                            <li>Обсуждение формата занятий (5 мин)</li>
+                            <li>Ответы на вопросы (5 мин)</li>
+                        </ol>
+                        <div class="note">
+                            <i class="fas fa-lightbulb"></i> Пробный урок должен быть динамичным и показать вашу экспертность!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="important" class="tab-content">
+                <div class="section">
+                    <h2><i class="fas fa-exclamation-circle"></i> Важно для преподавателя</h2>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-comment-dots"></i> Обратная связь</div>
+                        <ul>
+                            <li>После каждого урока - краткий отчет в ЛК</li>
+                            <li>Раз в месяц - подробный отчет для родителей</li>
+                            <li>Немедленно - при возникновении проблем</li>
+                            <li>Формат: конструктивно, доброжелательно, конкретно</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-file-alt"></i> Отчетность</div>
+                        <ul>
+                            <li>Ежедневно: отметка о проведенных занятиях</li>
+                            <li>Еженедельно: отчет о прогрессе учеников</li>
+                            <li>Ежемесячно: общий отчет и план на следующий месяц</li>
+                            <li>Специальные отчеты по запросу методиста</li>
+                        </ul>
+                        <div class="warning">
+                            <i class="fas fa-exclamation-triangle"></i> Просрочка отчетов более чем на 3 дня - штраф 300₽
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-camera"></i> Скриншоты занятий</div>
+                        <ul>
+                            <li>Делать в начале и в конце каждого занятия</li>
+                            <li>На скриншоте должно быть видно лицо преподавателя и ученика</li>
+                            <li>Загружать в систему не позднее чем через 2 часа после урока</li>
+                            <li>Подписывать в формате: "Дата_Ученик_Предмет"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-calendar-alt"></i> Расписание/график преподавателя</div>
+                        <ul>
+                            <li>График утверждается на месяц вперед</li>
+                            <li>Изменения возможны не позднее чем за 48 часов</li>
+                            <li>Занятия начинаются строго по времени</li>
+                            <li>Окно между занятиями - не менее 15 минут</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-comments"></i> Работа с группой в WhatsApp</div>
+                        <ul>
+                            <li>Обязательно состоять в общей группе преподавателей</li>
+                            <li>Отвечать на сообщения в течение 3 часов</li>
+                            <li>Не обсуждать учеников в общем чате</li>
+                            <li>Соблюдать деловой стиль общения</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-clock"></i> Опоздания/Переносы</div>
+                        <h3><i class="fas fa-user-clock"></i> Опоздания</h3>
+                        <ul>
+                            <li>До 10 минут - предупреждение</li>
+                            <li>Более 10 минут - штраф 500₽</li>
+                            <li>Более 15 минут - занятие считается пропущенным</li>
+                        </ul>
+                        
+                        <h3><i class="fas fa-exchange-alt"></i> Переносы</h3>
+                        <ul>
+                            <li>Возможны не позднее чем за 24 часа</li>
+                            <li>Не более 2 переносов в месяц для одного ученика</li>
+                            <li>Согласовывать с методистом</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="problems" class="tab-content">
+                <div class="section">
+                    <h2><i class="fas fa-question-circle"></i> Трудности с учениками - решение</h2>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-user-slash"></i> Ученик не заходит на урок</div>
+                        <ol>
+                            <li>Попробовать связаться по телефону (если есть доступ)</li>
+                            <li>Подождать 15 минут в онлайн-комнате</li>
+                            <li>Отправить сообщение в WhatsApp/Telegram</li>
+                            <li>Сообщить методисту о проблеме</li>
+                            <li>Заполнить отчет о несостоявшемся занятии</li>
+                        </ol>
+                        <div class="note">
+                            <i class="fas fa-info-circle"></i> Если ученик не предупредил - занятие оплачивается полностью.
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-comment-alt"></i> Сложно найти общий язык с учеником</div>
+                        <h3><i class="fas fa-lightbulb"></i> Советы:</h3>
+                        <ul>
+                            <li>Попробуйте найти общие интересы</li>
+                            <li>Используйте игровые методы обучения</li>
+                            <li>Чаще хвалите за маленькие успехи</li>
+                            <li>Меняйте виды деятельности в течение урока</li>
+                            <li>Обсудите проблему с методистом</li>
+                        </ul>
+                        
+                        <h3><i class="fas fa-flag"></i> Когда обращаться за помощью:</h3>
+                        <ul>
+                            <li>После 3 неудачных попыток наладить контакт</li>
+                            <li>При агрессивном поведении ученика</li>
+                            <li>Если ученик систематически не выполняет задания</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-title"><i class="fas fa-fire-alt"></i> Мотивация преподавателя и ученика</div>
+                        <h3><i class="fas fa-user-tie"></i> Для преподавателя:</h3>
+                        <ul>
+                            <li>Ставьте себе маленькие цели на каждый урок</li>
+                            <li>Отмечайте прогресс учеников</li>
+                            <li>Участвуйте в конкурсах и бонусных программах</li>
+                            <li>Общайтесь с коллегами</li>
+                            <li>Повышайте квалификацию</li>
+                        </ul>
+                        
+                        <h3><i class="fas fa-user-graduate"></i> Для ученика:</h3>
+                        <ul>
+                            <li>Показывайте практическое применение знаний</li>
+                            <li>Используйте систему поощрений</li>
+                            <li>Давайте задания по интересам</li>
+                            <li>Показывайте прогресс в цифрах и графиках</li>
+                            <li>Организуйте мини-соревнования (если группа)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Azat Academy © 2023. Все права защищены.</p>
+            <p>Версия 2.1 (обновлено 15.06.2023)</p>
+        </div>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Скрыть все tab-content
+            var tabcontents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabcontents.length; i++) {
+                tabcontents[i].classList.remove("active");
+            }
+            
+            // Убрать active у всех tab
+            var tabs = document.getElementsByClassName("tab");
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Показать текущую вкладку и добавить active к кнопке
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+    </script>
+</body>
+</html>
