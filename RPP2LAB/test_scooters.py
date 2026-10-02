@@ -3,9 +3,9 @@ import unittest
 from datetime import datetime, timedelta
 from decimal import Decimal
 
-from scooters import (BatteryLevel, DomainInvariantViolation, InMemoryScooterRepository,
-                      InMemoryTripRepository, InvalidValueObject, Money, Scooter, ScooterId,
-                      ScooterStatus, StartTripService, Tariff, Trip, TripId)
+from scooters import (BatteryLevel, DomainInvariantViolation, InvalidValueObject, Money,
+                      Scooter, ScooterId, ScooterStatus, StartTripService, Tariff, Trip, TripId)
+from scooters_repository import InMemoryScooterRepository, InMemoryTripRepository
 
 T0 = datetime(2026, 10, 1, 12, 0)
 TARIFF = Tariff(Money(Decimal(10)), Money(Decimal(50)))

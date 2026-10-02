@@ -1,4 +1,5 @@
-"""ЛР2. Доменная модель «Прокат самокатов» (DDD).  Запуск: python scooters.py"""
+"""ЛР2. Доменный слой «Прокат самокатов» (DDD): исключения, объекты-значения,
+агрегаты, порты (Protocol) и доменный сервис. Только стандартная библиотека Python."""
 from __future__ import annotations
 
 import math
@@ -170,62 +171,3 @@ class StartTripService:
         self._scooters.save(scooter)
         self._trips.save(trip)
         return trip
-
-
-# ===== 7. In-memory база данных =====
-
-class InMemoryScooterRepository:
-    def __init__(self) -> None:
-        self._items: dict[ScooterId, Scooter] = {}
-
-    def get(self, scooter_id: ScooterId) -> Scooter:
-        return self._items[scooter_id]
-
-    def save(self, scooter: Scooter) -> None:
-        self._items[scooter.id] = scooter
-
-
-class InMemoryTripRepository:
-    def __init__(self) -> None:
-        self._items: dict[TripId, Trip] = {}
-
-    def get(self, trip_id: TripId) -> Trip:
-        return self._items[trip_id]
-
-    def save(self, trip: Trip) -> None:
-        self._items[trip.id] = trip
-
-
-# ===== 8. Демонстрация =====
-
-if __name__ == "__main__":
-    scooters, trips = InMemoryScooterRepository(), InMemoryTripRepository()
-    service = StartTripService(scooters, trips)
-    tariff = Tariff(Money(Decimal("7.5")), Money(Decimal(50)))
-    t0 = datetime(2026, 10, 1, 12, 0)
-
-    charged = Scooter(ScooterId.new(), BatteryLevel(85))
-    low = Scooter(ScooterId.new(), BatteryLevel(10))
-    for s in (charged, low):
-        scooters.save(s)
-
-    trip = service.start(charged.id, t0, tariff)
-    print("1) Поездка начата, самокат:", scooters.get(charged.id).status.value)
-
-    for text, scooter_id in (("2) Повторная аренда", charged.id), ("3) Заряд 10 %", low.id)):
-        try:
-            service.start(scooter_id, t0, tariff)
-        except DomainError as e:
-            print(f"{text} — отказ:", e)
-
-    print("4) Поездка 12 мин 10 с, стоимость:", trip.finish(datetime(2026, 10, 1, 12, 12, 10)).amount, "руб.")
-
-    try:
-        trip.finish(datetime(2026, 10, 1, 12, 20))
-    except DomainError as e:
-        print("5) Повторное завершение — отказ:", e)
-
-    try:
-        BatteryLevel(150)
-    except DomainError as e:
-        print("6) Заряд 150 % — отказ:", e)
