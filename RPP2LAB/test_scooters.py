@@ -1,4 +1,3 @@
-"""Тесты для scooters.py.  Запуск: python -m unittest test_scooters -v"""
 import unittest
 from datetime import datetime, timedelta
 from decimal import Decimal

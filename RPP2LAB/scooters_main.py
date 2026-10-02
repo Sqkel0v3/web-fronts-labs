@@ -1,4 +1,3 @@
-"""Демонстрация работы доменной модели.  Запуск: python scooters_main.py"""
 from datetime import datetime
 from decimal import Decimal
 
@@ -6,27 +5,33 @@ from scooters import BatteryLevel, DomainError, Money, Scooter, ScooterId, Start
 from scooters_repository import InMemoryScooterRepository, InMemoryTripRepository
 
 
-def main() -> None:
-    scooters, trips = InMemoryScooterRepository(), InMemoryTripRepository()
+def main():
+    scooters = InMemoryScooterRepository()
+    trips = InMemoryTripRepository()
     service = StartTripService(scooters, trips)
     tariff = Tariff(Money(Decimal("7.5")), Money(Decimal(50)))
-    t0 = datetime(2026, 10, 1, 12, 0)
+    start_time = datetime(2026, 10, 1, 12, 0)
 
     charged = Scooter(ScooterId.new(), BatteryLevel(85))
     low = Scooter(ScooterId.new(), BatteryLevel(10))
-    for s in (charged, low):
-        scooters.save(s)
+    scooters.save(charged)
+    scooters.save(low)
 
-    trip = service.start(charged.id, t0, tariff)
+    trip = service.start(charged.id, start_time, tariff)
     print("1) Поездка начата, самокат:", scooters.get(charged.id).status.value)
 
-    for text, scooter_id in (("2) Повторная аренда", charged.id), ("3) Заряд 10 %", low.id)):
-        try:
-            service.start(scooter_id, t0, tariff)
-        except DomainError as e:
-            print(f"{text} — отказ:", e)
+    try:
+        service.start(charged.id, start_time, tariff)
+    except DomainError as e:
+        print("2) Повторная аренда — отказ:", e)
 
-    print("4) Поездка 12 мин 10 с, стоимость:", trip.finish(datetime(2026, 10, 1, 12, 12, 10)).amount, "руб.")
+    try:
+        service.start(low.id, start_time, tariff)
+    except DomainError as e:
+        print("3) Заряд 10 % — отказ:", e)
+
+    cost = trip.finish(datetime(2026, 10, 1, 12, 12, 10))
+    print("4) Поездка 12 мин 10 с, стоимость:", cost.amount, "руб.")
 
     try:
         trip.finish(datetime(2026, 10, 1, 12, 20))
