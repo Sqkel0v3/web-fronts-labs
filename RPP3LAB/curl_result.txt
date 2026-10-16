@@ -1,0 +1,188 @@
+===== 1. Основной путь: бронь, старт, пауза, продолжение, завершение в зоне, фото, оплата =====
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{"scooter_id": "00000000-0000-0000-0000-000000000001", "client_id": "00000000-0000-0000-0000-000000000065"}'
+{"allowed_events":["expire_reservation","reject","start"],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","status":"Забронирована"}
+
+HTTP 201
+
+$ curl -X POST http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a/start
+{"allowed_events":["finish","pause"],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","status":"В пути"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a/command -H 'Content-Type: application/json' -d '{"command": "пауза"}'
+{"allowed_events":["resume"],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","status":"На паузе"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a/resume
+{"allowed_events":["finish","pause"],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","status":"В пути"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a/command -H 'Content-Type: application/json' -d '{"command": "завершить", "lat": 54.5, "lon": 82.5}'
+{"allowed_events":["fail_payment","pay"],"cost":"50","id":"288036c3-defd-4d96-91a1-4faff7fe024a","status":"Завершена"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a/photo -H 'Content-Type: application/json' -d '{"photo_id": "photo-1"}'
+{"allowed_events":[],"cost":"50","id":"288036c3-defd-4d96-91a1-4faff7fe024a","status":"Оплачена"}
+
+HTTP 200
+
+$ curl -X GET http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a
+{"allowed_events":[],"client_id":"00000000-0000-0000-0000-000000000065","cost":"50","events":[{"occurred_at":"2026-10-16T12:52:44","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripReserved"},{"amount":"300","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"PaymentAuthorized"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripStarted"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripPaused"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripResumed"},{"cost":"50","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripFinished"},{"occurred_at":"2026-10-16T12:52:44","photo_id":"photo-1","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"PhotoReceived"},{"amount":"50","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripPaid"}],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","scooter_id":"00000000-0000-0000-0000-000000000001","status":"Оплачена"}
+
+HTTP 200
+
+===== 2. Альтернативный путь: у клиента задолженность, поездка не начата =====
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{"scooter_id": "00000000-0000-0000-0000-000000000002", "client_id": "00000000-0000-0000-0000-000000000066"}'
+{"allowed_events":["expire_reservation","reject","start"],"id":"4eb10058-29b7-438d-b277-cc0d18327395","status":"Забронирована"}
+
+HTTP 201
+
+$ curl -X POST http://127.0.0.1:8000/trips/4eb10058-29b7-438d-b277-cc0d18327395/start
+{"allowed_events":[],"id":"4eb10058-29b7-438d-b277-cc0d18327395","status":"Не начата"}
+
+HTTP 200
+
+===== 3. Альтернативный путь: списание не прошло, долг и блокировка =====
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{"scooter_id": "00000000-0000-0000-0000-000000000002", "client_id": "00000000-0000-0000-0000-000000000067"}'
+{"allowed_events":["expire_reservation","reject","start"],"id":"0c7718e8-f7f2-4f92-a4c7-a5c974069512","status":"Забронирована"}
+
+HTTP 201
+
+$ curl -X POST http://127.0.0.1:8000/trips/0c7718e8-f7f2-4f92-a4c7-a5c974069512/start
+{"allowed_events":["finish","pause"],"id":"0c7718e8-f7f2-4f92-a4c7-a5c974069512","status":"В пути"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/0c7718e8-f7f2-4f92-a4c7-a5c974069512/command -H 'Content-Type: application/json' -d '{"command": "завершить", "lat": 54.5, "lon": 82.5}'
+{"allowed_events":["fail_payment","pay"],"cost":"50","id":"0c7718e8-f7f2-4f92-a4c7-a5c974069512","status":"Завершена"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/0c7718e8-f7f2-4f92-a4c7-a5c974069512/photo -H 'Content-Type: application/json' -d '{"photo_id": "photo-3"}'
+{"allowed_events":[],"cost":"50","id":"0c7718e8-f7f2-4f92-a4c7-a5c974069512","status":"Задолженность"}
+
+HTTP 200
+
+===== 4. Таймер «10 мин»: бронь истекла =====
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{"scooter_id": "00000000-0000-0000-0000-000000000001", "client_id": "00000000-0000-0000-0000-000000000065"}'
+{"allowed_events":["expire_reservation","reject","start"],"id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","status":"Забронирована"}
+
+HTTP 201
+
+$ curl -X POST http://127.0.0.1:8000/internal/tick -H 'Content-Type: application/json' -d '{"now": "2026-10-16T13:03:45"}'
+{"changed":[{"id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","status":"Бронь истекла"}],"now":"2026-10-16T13:03:45"}
+
+HTTP 200
+
+$ curl -X GET http://127.0.0.1:8000/trips/6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6
+{"allowed_events":[],"client_id":"00000000-0000-0000-0000-000000000065","events":[{"occurred_at":"2026-10-16T12:52:45","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","type":"TripReserved"},{"occurred_at":"2026-10-16T13:03:45","trip_id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","type":"ReservationTimedOut"}],"id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","scooter_id":"00000000-0000-0000-0000-000000000001","status":"Бронь истекла"}
+
+HTTP 200
+
+===== 5. Таймер «12 часов»: уведомление оператору, состояние не меняется =====
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{"scooter_id": "00000000-0000-0000-0000-000000000001", "client_id": "00000000-0000-0000-0000-000000000065"}'
+{"allowed_events":["expire_reservation","reject","start"],"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","status":"Забронирована"}
+
+HTTP 201
+
+$ curl -X POST http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46/start
+{"allowed_events":["finish","pause"],"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","status":"В пути"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/internal/tick -H 'Content-Type: application/json' -d '{"now": "2026-10-17T02:03:45"}'
+{"changed":[{"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","status":"В пути"}],"now":"2026-10-17T02:03:45"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46/operator-contact -H 'Content-Type: application/json' -d '{"result": "клиент предупреждён"}'
+{"allowed_events":["finish","pause"],"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","status":"В пути"}
+
+HTTP 200
+
+$ curl -X GET http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46
+{"allowed_events":["finish","pause"],"client_id":"00000000-0000-0000-0000-000000000065","events":[{"occurred_at":"2026-10-16T13:03:45","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"TripReserved"},{"amount":"300","occurred_at":"2026-10-16T13:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"PaymentAuthorized"},{"occurred_at":"2026-10-16T13:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"TripStarted"},{"occurred_at":"2026-10-17T02:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"LongRideDetected"},{"occurred_at":"2026-10-17T02:03:45","result":"клиент предупреждён","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"OperatorContactedClient"}],"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","scooter_id":"00000000-0000-0000-0000-000000000001","status":"В пути"}
+
+HTTP 200
+
+===== 6. Недопустимые события: 409, состояние до и после совпадает =====
+$ curl -X GET http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a
+{"allowed_events":[],"client_id":"00000000-0000-0000-0000-000000000065","cost":"50","events":[{"occurred_at":"2026-10-16T12:52:44","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripReserved"},{"amount":"300","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"PaymentAuthorized"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripStarted"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripPaused"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripResumed"},{"cost":"50","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripFinished"},{"occurred_at":"2026-10-16T12:52:44","photo_id":"photo-1","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"PhotoReceived"},{"amount":"50","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripPaid"}],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","scooter_id":"00000000-0000-0000-0000-000000000001","status":"Оплачена"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a/resume
+{"error":"TransitionNotAllowed","message":"Событие resume недопустимо в состоянии «Оплачена»"}
+
+HTTP 409
+
+$ curl -X GET http://127.0.0.1:8000/trips/288036c3-defd-4d96-91a1-4faff7fe024a
+{"allowed_events":[],"client_id":"00000000-0000-0000-0000-000000000065","cost":"50","events":[{"occurred_at":"2026-10-16T12:52:44","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripReserved"},{"amount":"300","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"PaymentAuthorized"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripStarted"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripPaused"},{"occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripResumed"},{"cost":"50","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripFinished"},{"occurred_at":"2026-10-16T12:52:44","photo_id":"photo-1","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"PhotoReceived"},{"amount":"50","occurred_at":"2026-10-16T12:52:44","trip_id":"288036c3-defd-4d96-91a1-4faff7fe024a","type":"TripPaid"}],"id":"288036c3-defd-4d96-91a1-4faff7fe024a","scooter_id":"00000000-0000-0000-0000-000000000001","status":"Оплачена"}
+
+HTTP 200
+
+$ curl -X GET http://127.0.0.1:8000/trips/6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6
+{"allowed_events":[],"client_id":"00000000-0000-0000-0000-000000000065","events":[{"occurred_at":"2026-10-16T12:52:45","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","type":"TripReserved"},{"occurred_at":"2026-10-16T13:03:45","trip_id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","type":"ReservationTimedOut"}],"id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","scooter_id":"00000000-0000-0000-0000-000000000001","status":"Бронь истекла"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6/start
+{"error":"TransitionNotAllowed","message":"Событие start недопустимо в состоянии «Бронь истекла»"}
+
+HTTP 409
+
+$ curl -X GET http://127.0.0.1:8000/trips/6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6
+{"allowed_events":[],"client_id":"00000000-0000-0000-0000-000000000065","events":[{"occurred_at":"2026-10-16T12:52:45","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","type":"TripReserved"},{"occurred_at":"2026-10-16T13:03:45","trip_id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","type":"ReservationTimedOut"}],"id":"6fc3c9e3-5fce-4640-ade2-b3be4bdb24f6","scooter_id":"00000000-0000-0000-0000-000000000001","status":"Бронь истекла"}
+
+HTTP 200
+
+$ curl -X GET http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46
+{"allowed_events":["finish","pause"],"client_id":"00000000-0000-0000-0000-000000000065","events":[{"occurred_at":"2026-10-16T13:03:45","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"TripReserved"},{"amount":"300","occurred_at":"2026-10-16T13:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"PaymentAuthorized"},{"occurred_at":"2026-10-16T13:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"TripStarted"},{"occurred_at":"2026-10-17T02:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"LongRideDetected"},{"occurred_at":"2026-10-17T02:03:45","result":"клиент предупреждён","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"OperatorContactedClient"}],"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","scooter_id":"00000000-0000-0000-0000-000000000001","status":"В пути"}
+
+HTTP 200
+
+$ curl -X POST http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46/photo -H 'Content-Type: application/json' -d '{"photo_id": "photo-5"}'
+{"error":"TransitionNotAllowed","message":"Событие pay недопустимо в состоянии «В пути»"}
+
+HTTP 409
+
+$ curl -X GET http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46
+{"allowed_events":["finish","pause"],"client_id":"00000000-0000-0000-0000-000000000065","events":[{"occurred_at":"2026-10-16T13:03:45","scooter_id":"00000000-0000-0000-0000-000000000001","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"TripReserved"},{"amount":"300","occurred_at":"2026-10-16T13:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"PaymentAuthorized"},{"occurred_at":"2026-10-16T13:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"TripStarted"},{"occurred_at":"2026-10-17T02:03:45","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"LongRideDetected"},{"occurred_at":"2026-10-17T02:03:45","result":"клиент предупреждён","trip_id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","type":"OperatorContactedClient"}],"id":"e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46","scooter_id":"00000000-0000-0000-0000-000000000001","status":"В пути"}
+
+HTTP 200
+
+===== 7. Некорректные данные: 422 =====
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{}'
+{"error":"InvalidValueObject","message":"Отсутствует поле scooter_id"}
+
+HTTP 422
+
+$ curl -X POST http://127.0.0.1:8000/trips -H 'Content-Type: application/json' -d '{"scooter_id": "00000000-0000-0000-0000-000000000003", "client_id": "00000000-0000-0000-0000-000000000065"}'
+{"error":"DomainInvariantViolation","message":"Заряд ниже 20 %"}
+
+HTTP 422
+
+$ curl -X POST http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46/command -H 'Content-Type: application/json' -d '{"command": "взлететь"}'
+{"error":"InvalidValueObject","message":"Команда клиента: «пауза» или «завершить»"}
+
+HTTP 422
+
+$ curl -X POST http://127.0.0.1:8000/trips/e7f3cbe0-7b47-4e7d-952e-7cd7fc41eb46/command -H 'Content-Type: application/json' -d '{"command": "завершить", "lat": "север", "lon": 82.5}'
+{"error":"InvalidValueObject","message":"Поле lat должно быть числом"}
+
+HTTP 422
+
+$ curl -X POST http://127.0.0.1:8000/internal/tick -H 'Content-Type: application/json' -d '{"now": "2020-01-01T00:00:00"}'
+{"error":"ClockMovedBack","message":"Перевод часов назад запрещён"}
+
+HTTP 422
+
+===== 8. Сущность не найдена: 404 =====
+$ curl -X GET http://127.0.0.1:8000/trips/00000000-0000-0000-0000-000000000999
+{"error":"AggregateNotFound","message":"Поездка не найдена"}
+
+HTTP 404
+
